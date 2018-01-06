@@ -1,0 +1,5 @@
+FROM openjdk:8-jre-alpine
+
+COPY docker-worker.jar /docker-worker.jar
+
+CMD ["/usr/bin/java", "-jar", "/docker-worker.jar"]

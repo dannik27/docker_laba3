@@ -1,0 +1,5 @@
+FROM openjdk:8-jre-alpine
+
+COPY docker-master.jar /docker-master.jar
+
+CMD ["/usr/bin/java", "-jar", "/docker-master.jar"]
