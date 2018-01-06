@@ -1,0 +1,4 @@
+rootProject.name = 'gradle-docker'
+include 'docker-master'
+include 'docker-worker'
+

@@ -1,0 +1,36 @@
+group 'com.dannik'
+version '1.0'
+
+
+bootRepackage {
+    mainClass = 'com.dannik.docker_worker.Application'
+}
+
+jar {
+    baseName = 'docker-worker'
+    version =  '1.0'
+}
+
+task copyJar(type: Copy) {
+    dependsOn   'jar'
+    from        "build/libs/${project.name}-${project.version}.jar"
+    //from "gradlew"
+    into        "../docker"
+    rename { String fileName ->
+        "${project.name}.jar"
+    }
+}
+build.dependsOn copyJar
+
+repositories {
+    mavenCentral()
+    maven { url "http://repo.spring.io/libs-release" }
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '1.5.9.RELEASE'
+
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
+    compile group: 'com.zaxxer', name: 'HikariCP', version: '2.7.4'
+}

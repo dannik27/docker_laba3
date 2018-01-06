@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Hello Spring Boot!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+</head>
+<body>
+
+    <script src="/webjars/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+    <div class="jumbotron" style="padding: 30px">
+        <h1 th:text="'Последнее число: ' + ${fibo.val}" id="curFibo"></h1>
+        <p>Карл у Клары украл кораллы...</p>
+        <p>
+            <a class="btn btn-primary btn-lg" role="button" id="btnCalculate">Увеличить</a>
+            <a class="btn btn-primary btn-lg" role="button" id="btnUpdate">Обновить</a>
+            <a class="btn btn-primary btn-lg" role="button" id="btnClear">Очистить</a>
+        </p>
+    </div>
+
+
+    <script>
+
+        $( document ).ready(function() {
+
+            var url = window.location;
+
+            $("#btnCalculate").click(function(event){
+
+                $.ajax({
+                    type : "PUT",
+                    url : url + "fibo",
+                    success: function(data){
+                        updateFibo();
+                    }
+                });
+
+            });
+
+            $("#btnClear").click(function(event){
+
+                $.ajax({
+                    type : "DELETE",
+                    url : url + "fibo",
+                    success: function(data){
+                        updateFibo();
+                    }
+                });
+
+            });
+
+            $("#btnUpdate").click(updateFibo());
+
+            function updateFibo(){
+
+                $.ajax({
+                    type : "GET",
+                    url : url + "fibo",
+                    success: function(data){
+                        $("#curFibo").text("Последнее число: " + data);
+                    }
+                });
+
+            }
+        })
+
+    </script>
+
+</body>
+</html>
